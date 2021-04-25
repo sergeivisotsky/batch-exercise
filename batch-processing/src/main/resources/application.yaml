@@ -1,0 +1,18 @@
+server:
+  port: 8081
+
+datasource:
+  url: ${DB_URL}
+  username: ${DB_USERNAME}
+  password: ${DB_PASSWORD}
+
+ftp:
+  host: ${FTP_HOST}
+  port: ${FTP_PORT}
+  username: ${FTP_USERNAME}
+  password: ${FTP_PASSWORD}
+
+spring:
+  batch:
+    job:
+      enabled: false

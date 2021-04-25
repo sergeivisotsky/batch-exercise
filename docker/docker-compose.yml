@@ -1,0 +1,84 @@
+version: '3.5'
+
+services:
+  db:
+    image: postgres
+    container_name: postgres-tmp
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    command:
+      [ "postgres", "-c", "wal_level=logical" ]
+    networks:
+      - batch_net
+
+  vsftpd-ftp:
+    image: fauria/vsftpd:latest
+    container_name: vsftpd-ftp
+    ports:
+      - "20:20"
+      - "21:21"
+      - "21100-21110:21100-21110"
+    restart: always
+    environment:
+      - FTP_USER=batch
+      - FTP_PASS=batch
+      - PASV_ADDRESS=127.0.0.1
+      - PASV_MIN_PORT=21100
+      - PASV_MAX_PORT=21110
+      - COMPOSE_HTTP_TIMEOUT=300
+    networks:
+      - batch_net
+
+  batch-deployer:
+    image: sergei/batch:batch-deployer-latest
+    container_name: batch-deployer
+    build:
+      context: ../batch-deployer
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+      - "1010:1010"
+    environment:
+      DB_URL: ${DB_URL}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JAVA_OPTS: '-Xdebug -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:1010 -Xms64m -Xmx512m'
+    external_links:
+      - db
+    depends_on:
+      - db
+    networks:
+      - batch_net
+
+  batch-processing:
+    image: sergei/batch:batch-processing-latest
+    container_name: batch-processing
+    build:
+      context: ../batch-processing
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+      - "1011:1011"
+    environment:
+      DB_URL: ${DB_URL}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      FTP_HOST: ${FTP_HOST}
+      FTP_PORT: ${FTP_PORT}
+      FTP_USERNAME: ${FTP_USERNAME}
+      FTP_PASSWORD: ${FTP_PASSWORD}
+      JAVA_OPTS: '-Xdebug -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:1011 -Xms64m -Xmx512m'
+    external_links:
+      - db
+    depends_on:
+      - db
+    networks:
+      - batch_net
+
+networks:
+  batch_net:
+    driver: bridge

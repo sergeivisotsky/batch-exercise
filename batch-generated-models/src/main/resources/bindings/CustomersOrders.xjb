@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1"
+               xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+               xmlns:xs="http://www.w3.org/2001/XMLSchema"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+               xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
+               xmlns:annox="http://annox.dev.java.net"
+               jaxb:extensionBindingPrefixes="xjc annox">
+
+    <jaxb:globalBindings>
+        <xjc:javaType name="java.time.LocalDateTime" xmlType="xs:dateTime"
+                      adapter="com.sergei.batch.xsd.binding.adapter.LocalDateTimeAdapter"/>
+    </jaxb:globalBindings>
+    <!--<jaxb:bindings schemaLocation="../xsd/CustomersOrders.xsd" node="/xs:schema">
+        <jaxb:bindings node="xs:element[@name='CustomersOrders']">
+            <annox:annotateClass>
+                @javax.xml.bind.annotation.XmlRootElement(name="CustomersOrders")
+            </annox:annotateClass>
+        </jaxb:bindings>
+        <jaxb:bindings node="xs:complexType[@name='AddressType']">
+            <annox:annotateClass>
+                @javax.xml.bind.annotation.XmlRootElement(name="FullAddress")
+            </annox:annotateClass>
+        </jaxb:bindings>
+        <jaxb:bindings node="xs:complexType[@name='CustomerType']">
+            <annox:annotateClass>
+                @javax.xml.bind.annotation.XmlRootElement(name="Customer")
+            </annox:annotateClass>
+        </jaxb:bindings>
+        <jaxb:bindings node="xs:complexType[@name='OrderType']">
+            <annox:annotateClass>
+                @javax.xml.bind.annotation.XmlRootElement(name="Order")
+            </annox:annotateClass>
+        </jaxb:bindings>
+        <jaxb:bindings node="xs:complexType[@name='ShipInfoType']">
+            <annox:annotateClass>
+                @javax.xml.bind.annotation.XmlRootElement(name="ShipInfo")
+            </annox:annotateClass>
+        </jaxb:bindings>
+    </jaxb:bindings>-->
+</jaxb:bindings>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+
+    <changeSet id="1" author="svisockis">
+        <createSequence cycle="true" incrementBy="1" sequenceName="master_seq" startValue="1"/>
+        <createTable tableName="Address">
+            <column name="id" type="NUMERIC(19,0)" defaultValueSequenceNext="master_seq">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="address" type="java.sql.Types.VARCHAR(25)"/>
+            <column name="city" type="java.sql.Types.VARCHAR(25)"/>
+            <column name="region" type="java.sql.Types.VARCHAR(45)"/>
+            <column name="postalCode" type="java.sql.Types.VARCHAR(15)"/>
+            <column name="country" type="java.sql.Types.VARCHAR(15)"/>
+        </createTable>
+        <createTable tableName="ShipInfo">
+            <column name="id" type="NUMERIC(19,0)" defaultValueSequenceNext="master_seq">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="shipVia" type="java.sql.Types.INTEGER"/>
+            <column name="freight" type="java.sql.Types.DECIMAL(19, 0)"/>
+            <column name="shipName" type="java.sql.Types.VARCHAR(45)"/>
+            <column name="shipAddress" type="java.sql.Types.VARCHAR(45)"/>
+            <column name="shipCity" type="java.sql.Types.VARCHAR(45)"/>
+            <column name="shipRegion" type="java.sql.Types.VARCHAR(45)"/>
+            <column name="shipPostalCode" type="java.sql.Types.VARCHAR(15)"/>
+            <column name="shipCountry" type="java.sql.Types.VARCHAR(45)"/>
+            <column name="shipDate" type="java.sql.Types.DATE"/>
+        </createTable>
+        <createTable tableName="Order">
+            <column name="id" type="NUMERIC(19,0)" defaultValueSequenceNext="master_seq">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="customerId" type="java.sql.Types.VARCHAR(15)"/>
+            <column name="employeeId" type="java.sql.Types.VARCHAR(15)"/>
+            <column name="orderDate" type="java.sql.Types.DATE"/>
+            <column name="requiredDate" type="java.sql.Types.DATE"/>
+            <column name="shipInfoId" type="NUMERIC(19,0)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="Order" baseColumnNames="shipInfoId"
+                                 constraintName="order_ship_info_fk"
+                                 referencedTableName="ShipInfo"
+                                 referencedColumnNames="id"/>
+        <createTable tableName="Customer">
+            <column name="id" type="NUMERIC(19,0)" defaultValueSequenceNext="master_seq">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="companyName" type="java.sql.Types.VARCHAR(45)"/>
+            <column name="contactName" type="java.sql.Types.VARCHAR(45)"/>
+            <column name="contactTitle" type="java.sql.Types.VARCHAR(45)"/>
+            <column name="phone" type="java.sql.Types.VARCHAR(20)"/>
+            <column name="fax" type="java.sql.Types.VARCHAR(20)"/>
+        </createTable>
+        <createTable tableName="CustomerOrders">
+            <column name="id" type="NUMERIC(19,0)" defaultValueSequenceNext="master_seq">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="customerId" type="NUMERIC(19,0)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="orderId" type="NUMERIC(19,0)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="CustomerOrders" baseColumnNames="customerId"
+                                 constraintName="customer_order_relationship_fk"
+                                 referencedTableName="Customer"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="CustomerOrders" baseColumnNames="orderId"
+                                 constraintName="order_customer_relationship_fk"
+                                 referencedTableName="Order"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

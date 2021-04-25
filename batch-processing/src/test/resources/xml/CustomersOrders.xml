@@ -1,0 +1,34 @@
+<cus:CustomersOrders xmlns:cus="CustomersOrders.xsd">
+  <Customers CustomerID="token">
+    <CompanyName>string</CompanyName>
+    <ContactName>string</ContactName>
+    <ContactTitle>string</ContactTitle>
+    <Phone>string</Phone>
+    <!--Optional:-->
+    <Fax>string</Fax>
+    <FullAddress CustomerID="token">
+      <Address>string</Address>
+      <City>string</City>
+      <Region>string</Region>
+      <PostalCode>string</PostalCode>
+      <Country>string</Country>
+    </FullAddress>
+    <!--Zero or more repetitions:-->
+    <Orders>
+      <CustomerID>token</CustomerID>
+      <EmployeeID>token</EmployeeID>
+      <OrderDate>2008-09-29T04:49:45</OrderDate>
+      <RequiredDate>2014-09-19T02:18:33</RequiredDate>
+      <ShipInfo ShippedDate="2006-08-19T20:27:14+03:00">
+        <ShipVia>100</ShipVia>
+        <Freight>1000.00</Freight>
+        <ShipName>string</ShipName>
+        <ShipAddress>string</ShipAddress>
+        <ShipCity>string</ShipCity>
+        <ShipRegion>string</ShipRegion>
+        <ShipPostalCode>string</ShipPostalCode>
+        <ShipCountry>string</ShipCountry>
+      </ShipInfo>
+    </Orders>
+  </Customers>
+</cus:CustomersOrders>
