@@ -1,6 +1,6 @@
 package com.sergei.batch.processing.rest.dto;
 
-import java.util.Map;
+import com.google.gson.JsonObject;
 
 /**
  * Job execution request
@@ -10,19 +10,25 @@ import java.util.Map;
  */
 public class JobRequest {
 
-    private final String jobName;
-    private final Map<String, String> parameters;
+    private String jobName;
+    private JsonObject parameters;
 
-    public JobRequest(String jobName, Map<String, String> parameters) {
-        this.jobName = jobName;
-        this.parameters = parameters;
+    public JobRequest() {
     }
 
     public String getJobName() {
         return jobName;
     }
 
-    public Map<String, String> getParameters() {
+    public void setJobName(String jobName) {
+        this.jobName = jobName;
+    }
+
+    public JsonObject getParameters() {
         return parameters;
+    }
+
+    public void setParameters(JsonObject parameters) {
+        this.parameters = parameters;
     }
 }

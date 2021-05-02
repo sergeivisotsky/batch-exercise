@@ -4,6 +4,7 @@ import com.sergei.batch.processing.job.JobExecutionHandler;
 import com.sergei.batch.processing.rest.dto.JobRequest;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
@@ -23,7 +24,7 @@ public class BatchRestController {
     }
 
     @PostMapping("/job/start")
-    public Mono<JobExecution> executeBatch(JobRequest request) {
+    public Mono<JobExecution> executeBatch(@RequestBody JobRequest request) {
         return jobHandler.determineAndExecuteJob(request);
     }
 }

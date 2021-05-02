@@ -3,6 +3,7 @@ package com.sergei.batch.processing.job;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.gson.JsonObject;
 import com.sergei.batch.processing.rest.dto.JobRequest;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
@@ -36,7 +37,7 @@ public class JobExecutionHandler {
 
     public Mono<JobExecution> determineAndExecuteJob(JobRequest request) {
         if (INTAKE_JOB.equals(request.getJobName())) {
-            Job intakeJob = (Job) context.getBean(INTAKE_JOB);
+            Job intakeJob = (Job) context.getBean("intakeJob");
             try {
                 return Mono.just(jobLauncher.run(intakeJob, transformParams(request)));
             } catch (JobExecutionAlreadyRunningException | JobRestartException |
@@ -48,9 +49,16 @@ public class JobExecutionHandler {
     }
 
     private JobParameters transformParams(JobRequest request) {
+        JsonObject requestParams = request.getParameters();
+
         Map<String, JobParameter> params = new HashMap<>();
-        request.getParameters()
-                .forEach((key, value) -> params.put(key, new JobParameter(value)));
+        for (String key : requestParams.keySet()) {
+            String param = requestParams.get(key)
+                    .toString()
+                    .replaceAll("\"", "");
+            params.put(key, new JobParameter(param));
+        }
+
         return new JobParameters(params);
     }
 }
