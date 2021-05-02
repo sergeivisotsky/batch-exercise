@@ -2,16 +2,19 @@ version: '3.5'
 
 services:
   db:
-    image: postgres
-    container_name: postgres-tmp
+    image: mysql
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      MYSQL_DATABASE: 'batch'
+      MYSQL_USER: 'batch'
+      MYSQL_PASSWORD: 'batch'
+      MYSQL_ROOT_PASSWORD: 'root-batch'
     ports:
-      - "5432:5432"
-    command:
-      [ "postgres", "-c", "wal_level=logical" ]
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - batch-db:/var/lib/mysql
     networks:
       - batch_net
 
@@ -78,6 +81,9 @@ services:
       - db
     networks:
       - batch_net
+
+volumes:
+  batch-db:
 
 networks:
   batch_net:
