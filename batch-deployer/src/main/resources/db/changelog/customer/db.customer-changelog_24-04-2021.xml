@@ -5,9 +5,8 @@
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
 
     <changeSet id="1" author="svisockis">
-        <createSequence cycle="true" incrementBy="1" sequenceName="master_seq" startValue="1"/>
         <createTable tableName="Address">
-            <column name="id" type="NUMERIC(19,0)" defaultValueSequenceNext="master_seq">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="address" type="java.sql.Types.VARCHAR(25)"/>
@@ -17,7 +16,7 @@
             <column name="country" type="java.sql.Types.VARCHAR(15)"/>
         </createTable>
         <createTable tableName="ShipInfo">
-            <column name="id" type="NUMERIC(19,0)" defaultValueSequenceNext="master_seq">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="shipVia" type="java.sql.Types.INTEGER"/>
@@ -31,14 +30,14 @@
             <column name="shipDate" type="java.sql.Types.DATE"/>
         </createTable>
         <createTable tableName="Order">
-            <column name="id" type="NUMERIC(19,0)" defaultValueSequenceNext="master_seq">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="customerId" type="java.sql.Types.VARCHAR(15)"/>
             <column name="employeeId" type="java.sql.Types.VARCHAR(15)"/>
             <column name="orderDate" type="java.sql.Types.DATE"/>
             <column name="requiredDate" type="java.sql.Types.DATE"/>
-            <column name="shipInfoId" type="NUMERIC(19,0)">
+            <column name="shipInfoId" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -47,7 +46,7 @@
                                  referencedTableName="ShipInfo"
                                  referencedColumnNames="id"/>
         <createTable tableName="Customer">
-            <column name="id" type="NUMERIC(19,0)" defaultValueSequenceNext="master_seq">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="companyName" type="java.sql.Types.VARCHAR(45)"/>
@@ -57,13 +56,13 @@
             <column name="fax" type="java.sql.Types.VARCHAR(20)"/>
         </createTable>
         <createTable tableName="CustomerOrders">
-            <column name="id" type="NUMERIC(19,0)" defaultValueSequenceNext="master_seq">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="customerId" type="NUMERIC(19,0)">
+            <column name="customerId" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
-            <column name="orderId" type="NUMERIC(19,0)">
+            <column name="orderId" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
         </createTable>
