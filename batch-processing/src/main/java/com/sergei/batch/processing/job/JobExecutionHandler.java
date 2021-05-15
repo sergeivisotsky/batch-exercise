@@ -49,6 +49,9 @@ public class JobExecutionHandler {
     }
 
     private JobParameters transformParams(JobRequest request) {
+        if (request.getParameters() == null) {
+            return new JobParameters();
+        }
         JsonObject requestParams = request.getParameters();
 
         Map<String, JobParameter> params = new HashMap<>();
