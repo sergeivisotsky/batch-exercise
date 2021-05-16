@@ -65,6 +65,12 @@
             <artifactId>commons-io</artifactId>
         </dependency>
 
+        <!-- AWS S3 -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk</artifactId>
+        </dependency>
+
         <!-- Batch Processing dependencies -->
         <dependency>
             <groupId>com.sergei.batch</groupId>

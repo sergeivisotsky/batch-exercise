@@ -7,6 +7,7 @@ import com.sergei.batch.processing.jaxb.CustomerOrdersUnmarshaller;
 import com.sergei.batch.xsd.dto.CustomersOrders;
 import org.apache.commons.net.ftp.FTPFile;
 import org.springframework.batch.item.ItemReader;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.integration.file.remote.session.Session;
 import org.springframework.stereotype.Component;
 
@@ -15,13 +16,14 @@ import org.springframework.stereotype.Component;
  * @since 1.0
  */
 @Component(value = "intakeReader")
-public class IntakeJobItemReader implements ItemReader<CustomersOrders> {
+@ConditionalOnProperty(value = "file.storage", havingValue = "ftp")
+public class FTPIntakeJobItemReader implements ItemReader<CustomersOrders> {
 
     private final Session<FTPFile> ftpSession;
     private final CustomerOrdersUnmarshaller customerOrdersUnmarshaller;
 
-    public IntakeJobItemReader(Session<FTPFile> ftpSession,
-                               CustomerOrdersUnmarshaller customerOrdersUnmarshaller) {
+    public FTPIntakeJobItemReader(Session<FTPFile> ftpSession,
+                                  CustomerOrdersUnmarshaller customerOrdersUnmarshaller) {
         this.ftpSession = ftpSession;
         this.customerOrdersUnmarshaller = customerOrdersUnmarshaller;
     }
