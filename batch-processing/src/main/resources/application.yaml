@@ -6,11 +6,11 @@ datasource:
   username: ${DB_USERNAME}
   password: ${DB_PASSWORD}
 
-ftp:
-  host: ${FTP_HOST}
-  port: ${FTP_PORT}
-  username: ${FTP_USERNAME}
-  password: ${FTP_PASSWORD}
+file:
+  storage: ${FILE_STORAGE}
+  aws:
+    accessKey: ${AWS_ACCESS_KEY}
+    secretKey: ${AWS_SECRET_KEY}
 
 spring:
   batch:

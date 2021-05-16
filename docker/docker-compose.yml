@@ -70,10 +70,9 @@ services:
       DB_URL: ${DB_URL}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
-      FTP_HOST: ${FTP_HOST}
-      FTP_PORT: ${FTP_PORT}
-      FTP_USERNAME: ${FTP_USERNAME}
-      FTP_PASSWORD: ${FTP_PASSWORD}
+      FILE_STORAGE: ${FILE_STORAGE}
+      AWS_ACCESS_KEY: ${AWS_ACCESS_KEY}
+      AWS_SECRET_KEY: ${AWS_SECRET_KEY}
       JAVA_OPTS: '-Xdebug -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:1011 -Xms64m -Xmx512m'
     external_links:
       - db

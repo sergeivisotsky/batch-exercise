@@ -2,6 +2,7 @@ package com.sergei.batch.processing.config;
 
 import org.apache.commons.net.ftp.FTPFile;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.file.remote.session.CachingSessionFactory;
@@ -14,18 +15,19 @@ import org.springframework.integration.ftp.session.DefaultFtpSessionFactory;
  * @since 1.0
  */
 @Configuration
+@ConditionalOnProperty(value = "file.storage", havingValue = "ftp")
 public class FtpConfig {
 
-    @Value("${ftp.host}")
+    @Value("${file.ftp.host}")
     private String host;
 
-    @Value("${ftp.port}")
+    @Value("${file.ftp.port}")
     private Integer port;
 
-    @Value("${ftp.username}")
+    @Value("${file.ftp.username}")
     private String username;
 
-    @Value("${ftp.password}")
+    @Value("${file.ftp.password}")
     private String password;
 
     @Bean
